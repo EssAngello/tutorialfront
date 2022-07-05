@@ -1,0 +1,77 @@
+<div class="container">
+  <h1 *ngIf="loan.id == null">Crear préstamo</h1>
+  <h1 *ngIf="loan.id != null">Modificar préstamo</h1>
+
+  <form>
+    <mat-form-field>
+      <mat-label>Identificador</mat-label>
+      <input type="number" matInput placeholder="Identificador" [(ngModel)]="loan.id" name="id" disabled>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="loan.id!=null" appearance="fill">
+      <mat-label>Nombre Cliente</mat-label>
+      <mat-select [value]="clients[loan.client.id-1]" name="client" required (valueChange)="onChangeSelectionClient(client.value)" #client>
+        <mat-option *ngFor="let client of clients" [value]="client">
+          {{client.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error>El nombre no puede estar vacío</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="loan.id!=null" appearance="fill">
+      <mat-label>Nombre Juego</mat-label>
+      <mat-select [value]="games[loan.game.id-1]" name="game" required (valueChange)="onChangeSelectionGame(game.value)" #game>
+        <mat-option *ngFor="let game of games" [value]="game">
+          {{game.title}}
+        </mat-option>
+      </mat-select>
+      <mat-error>El nombre no puede estar vacío</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="loan.id==null" appearance="fill">
+      <mat-label>Nombre Cliente</mat-label>
+      <mat-select [value]="clients[0]" name="client" required (valueChange)="onChangeSelectionClient(client.value)" #client>
+        <mat-option *ngFor="let client of clients" [value]="client">
+          {{client.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error>El nombre no puede estar vacío</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="loan.id==null" appearance="fill">
+      <mat-label>Nombre Juego</mat-label>
+      <mat-select [value]="games[0]" name="game" required (valueChange)="onChangeSelectionGame(game.value)" #game>
+        <mat-option *ngFor="let game of games" [value]="game">
+          {{game.title}}
+        </mat-option>
+      </mat-select>
+      <mat-error>El nombre no puede estar vacío</mat-error>
+    </mat-form-field>
+
+   <h3>Fechas de prestamo</h3>
+   <div class="containerfechas">
+     <mat-form-field appearance="fill">
+       <mat-label>Fecha Préstamo</mat-label>
+       <input placeholder="Fecha préstamo" matInput  required [(ngModel)]="loan.startDate" name="loan.startDate" [matDatepicker]="picker" (dateChange)="onChangeDate()">
+       <mat-error>La fecha no puede estar vacía</mat-error>
+       <mat-hint>DD/MM/YYYY</mat-hint>
+       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+
+     <mat-form-field appearance="fill">
+       <mat-label>Fecha Préstamo</mat-label>
+       <input placeholder="Fecha devolución" matInput  required [(ngModel)]="loan.endDate" [min]="loan.startDate" [max]="maxDate" name="loan.endDate" [matDatepicker]="picker2"  >
+       <mat-error>La fecha no puede estar vacía</mat-error>
+       <mat-hint>DD/MM/YYYY</mat-hint>
+       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+       <mat-datepicker #picker2></mat-datepicker>
+     </mat-form-field>
+   </div>
+  </form>
+
+  <div class="buttons">
+    <button mat-stroked-button (click)="onClose()">Cerrar</button>
+    <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+  </div>
+</div>

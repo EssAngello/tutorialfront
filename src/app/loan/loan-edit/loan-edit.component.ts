@@ -86,7 +86,5 @@ export class LoanEditComponent implements OnInit {
     this.loan.game = game;
   }
 
-  //comentario de prueba github
-
 }
 
